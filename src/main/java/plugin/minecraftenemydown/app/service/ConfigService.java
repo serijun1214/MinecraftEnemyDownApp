@@ -26,4 +26,14 @@ public class ConfigService {
   public List<SpawnEnemy> searchSpwanEnemyList(String difficulty) {
     return mapper.selectSpawnEnemyList(difficulty);
   }
+
+  public GameConfig registerConfig(GameConfig config) {
+    mapper.insertConfig(config);
+    return mapper.selectConfig(config.getDifficulty());
+  }
+
+  public List<SpawnEnemy> updateEnemyScore(SpawnEnemy enemy) {
+    mapper.updateEnemyScore(enemy);
+    return mapper.selectSpawnEnemyList(enemy.getDifficulty());
+  }
 }
