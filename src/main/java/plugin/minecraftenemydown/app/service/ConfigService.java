@@ -2,6 +2,7 @@ package plugin.minecraftenemydown.app.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import plugin.minecraftenemydown.app.DuplicateConfigException;
 import plugin.minecraftenemydown.app.mapper.GameConfigMapper;
 import plugin.minecraftenemydown.app.mapper.data.GameConfig;
 import plugin.minecraftenemydown.app.mapper.data.SpawnEnemy;
@@ -27,7 +28,10 @@ public class ConfigService {
     return mapper.selectSpawnEnemyList(difficulty);
   }
 
-  public GameConfig registerConfig(GameConfig config) {
+  public GameConfig registerConfig(GameConfig config) throws Exception {
+    if (searchConfig(config.getDifficulty()) != null) {
+      throw new DuplicateConfigException("Duplicate Config Error!");
+    }
     mapper.insertConfig(config);
     return mapper.selectConfig(config.getDifficulty());
   }
